@@ -84,33 +84,40 @@ int main() {
     do {
         cout << "\n=== Electrical Load Monitoring System ===\n";
         cout << "1. Register Appliance\n";
-cout << "2. View Appliances\n";
-cout << "3. Display Total Energy\n";
-cout << "4. Exit\n";
-
+        cout << "2. View Appliances\n";
+        cout << "3. Display Total Energy\n";
+        cout << "4. Calculate Total Cost\n";
+        cout << "5. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
 
-      if (choice == 1) {
-    registerAppliance();
-}
-else if (choice == 2) {
-    viewAppliances();
-}
-else if (choice == 3) {
-    cout << "\nTotal Daily Energy Consumption: "
-         << totalEnergy << " kWh\n";
-}
-else if (choice == 4) {
-    cout << "Exiting program...\n";
-}
-else {
-    cout << "Invalid choice. Try again.\n";
-}
-  
+        if (choice == 1) {
+            registerAppliance();
+        }
+        else if (choice == 2) {
+            viewAppliances();
+        }
+        else if (choice == 3) {
+            cout << "\nTotal Daily Energy Consumption: "
+                 << totalEnergy << " kWh\n";
+        }
+        else if (choice == 4) {
+            double tariff;
+            cout << "Enter electricity tariff per kWh: ";
+            cin >> tariff;
 
-    } while (choice != 4);
+            double cost = totalEnergy * tariff;
 
+            cout << "\nTotal Cost: " << cost << endl;
+        }
+        else if (choice == 5) {
+            cout << "Exiting program...\n";
+        }
+        else {
+            cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 5);
 
     return 0;
 }
