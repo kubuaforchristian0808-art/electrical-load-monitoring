@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 double totalEnergy = 0;
@@ -48,20 +49,13 @@ void registerAppliance() {
     cout << "Enter power rating (W): ";
     cin >> power;
 
-    if (power <= 0) {
-        cout << "Power must be greater than zero.\n";
-        return;
-    }
-
     cout << "Enter usage hours per day: ";
     cin >> hours;
 
-    if (hours < 0 || hours > 24) {
-        cout << "Usage hours must be between 0 and 24.\n";
-        return;
-    }
+    double energy = (power * hours) / 1000.0;
 
-    appliances.push_back(Appliance(name, power, hours));
+    totalEnergy += energy;   // ← THIS LINE IS CRITICAL
+
     cout << "Appliance registered successfully!\n";
 }
 
@@ -76,7 +70,16 @@ void viewAppliances() {
         appliances[i].display();
     }
 }
+void saveReportToFile() {
+    ofstream file("report.txt");
 
+    file << "Electrical Load Monitoring Report\n";
+    file << "Total Energy: " << totalEnergy << " kWh\n";
+
+    file.close();
+
+    cout << "Report saved to report.txt\n";
+}
 // Main Function
 int main() {
     int choice;
@@ -87,7 +90,8 @@ int main() {
         cout << "2. View Appliances\n";
         cout << "3. Display Total Energy\n";
         cout << "4. Calculate Total Cost\n";
-        cout << "5. Exit\n";
+        cout << "5. Save Report to File\n";
+cout << "6. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -111,13 +115,16 @@ int main() {
             cout << "\nTotal Cost: " << cost << endl;
         }
         else if (choice == 5) {
-            cout << "Exiting program...\n";
-        }
-        else {
-            cout << "Invalid choice. Try again.\n";
-        }
+    saveReportToFile();
+}
+else if (choice == 6) {
+    cout << "Exiting program...\n";
+}
+else {
+    cout << "Invalid choice. Try again.\n";
+}       
 
-    } while (choice != 5);
+    } while (choice != 6);
 
     return 0;
 }
